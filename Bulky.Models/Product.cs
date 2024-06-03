@@ -15,6 +15,8 @@ namespace Bulky.Models
 
         [Required]
         public string Title { get; set; }
+        
+        [Required]
         public string Description { get; set; }
         
         [Required]
@@ -42,6 +44,5 @@ namespace Bulky.Models
         [Display(Name = "List for 100+")]
         [Range(1, 1000)]
         public double Price100 { get; set; }
-
     }
 }
