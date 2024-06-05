@@ -12,18 +12,18 @@ namespace BulkyWeb.Areas.Admin.Controllers
     
     public class ProductController : Controller
     {
-        private readonly IUnitOfWork _unitOfwork;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IWebHostEnvironment _webHostEnvironment;
 
         public ProductController(IUnitOfWork unitOfWork, IWebHostEnvironment webHostEnvironment)
         {
-            _unitOfwork = unitOfWork;
+            _unitOfWork = unitOfWork;
             _webHostEnvironment = webHostEnvironment;
         }
 
         public IActionResult Index()
         {
-            List<Product> objProductList = _unitOfwork.Product.GetAll(includeProperties:"Category").ToList();
+            List<Product> objProductList = _unitOfWork.Product.GetAll(includeProperties:"Category").ToList();
             return View(objProductList);
         }
         
@@ -32,7 +32,7 @@ namespace BulkyWeb.Areas.Admin.Controllers
         {
             ProductVM productVM = new()
             {
-                CategoryList = _unitOfwork.Category.GetAll().Select(u => new SelectListItem
+                CategoryList = _unitOfWork.Category.GetAll().Select(u => new SelectListItem
                 {
                     Text = u.Name,
                     Value = u.Id.ToString()
@@ -46,7 +46,7 @@ namespace BulkyWeb.Areas.Admin.Controllers
             }
             else // Update 
             {
-                productVM.Product = _unitOfwork.Product.Get(u => u.Id ==id);
+                productVM.Product = _unitOfWork.Product.Get(u => u.Id ==id);
                 return View( productVM );
             }
         }
@@ -83,20 +83,20 @@ namespace BulkyWeb.Areas.Admin.Controllers
                 
                 if( productVM.Product.Id == 0) //Add
                 {
-                    _unitOfwork.Product.Add(productVM.Product);
+                    _unitOfWork.Product.Add(productVM.Product);
                 }
                 else // Update
                 {
-                    _unitOfwork.Product.Update(productVM.Product);
+                    _unitOfWork.Product.Update(productVM.Product);
                 }
                
-                _unitOfwork.Save();
+                _unitOfWork.Save();
                 TempData["success"] = "Product Created sucessfully";
                 return RedirectToAction("Index", "Product");
             }
             else
             {
-                productVM.CategoryList = _unitOfwork.Category.GetAll().Select(u => new SelectListItem
+                productVM.CategoryList = _unitOfWork.Category.GetAll().Select(u => new SelectListItem
                 {
                     Text = u.Name,
                     Value = u.Id.ToString()
@@ -176,38 +176,38 @@ namespace BulkyWeb.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            List<Product> objProductList = _unitOfwork.Product.GetAll(includeProperties: "Category").ToList();
+            List<Product> objProductList = _unitOfWork.Product.GetAll(includeProperties: "Category").ToList();
             return Json(new { data = objProductList });
         }
 
-        //[HttpDelete]
-        //public IActionResult Delete(int? id)
-        //{
-        //    var productToBeDeleted = _unitOfWork.Product.Get(u => u.Id == id);
-        //    if (productToBeDeleted == null)
-        //    {
-        //        return Json(new { success = false, message = "Error while deleting" });
-        //    }
+        [HttpDelete]
+        public IActionResult Delete(int? id)
+        {
+            var productToBeDeleted = _unitOfWork.Product.Get(u => u.Id == id);
+            if (productToBeDeleted == null)
+            {
+                return Json(new { success = false, message = "Error while deleting" });
+            }
 
-        //    string productPath = @"images\products\product-" + id;
-        //    string finalPath = Path.Combine(_webHostEnvironment.WebRootPath, productPath);
+            string productPath = @"images\products\product-" + id;
+            string finalPath = Path.Combine(_webHostEnvironment.WebRootPath, productPath);
 
-        //    if (Directory.Exists(finalPath))
-        //    {
-        //        string[] filePaths = Directory.GetFiles(finalPath);
-        //        foreach (string filePath in filePaths)
-        //        {
-        //            System.IO.File.Delete(filePath);
-        //        }
+            if (Directory.Exists(finalPath))
+            {
+                string[] filePaths = Directory.GetFiles(finalPath);
+                foreach (string filePath in filePaths)
+                {
+                    System.IO.File.Delete(filePath);
+                }
 
-        //        Directory.Delete(finalPath);
-        //    }
+                Directory.Delete(finalPath);
+            }
 
-        //    _unitOfWork.Product.Remove(productToBeDeleted);
-        //    _unitOfWork.Save();
+            _unitOfWork.Product.Remove(productToBeDeleted);
+            _unitOfWork.Save();
 
-        //    return Json(new { success = true, message = "Delete Successful" });
-        //}
+            return Json(new { success = true, message = "Delete Successful" });
+        }
 
         #endregion
     }
