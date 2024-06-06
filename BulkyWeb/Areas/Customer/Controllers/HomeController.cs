@@ -24,6 +24,7 @@ namespace BulkyWeb.Areas.Customer.Controllers
             return View(productList);
         }
 
+        // Have to pass to Index view as asp-route-productId="@product.Id" otherwise it passes product as Null 
         public IActionResult Details(int productId)
         {
             Product product = _unitOfWork.Product.Get(p=>p.Id==productId, includeProperties: "Category");
