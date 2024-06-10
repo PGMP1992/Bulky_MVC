@@ -11,7 +11,9 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<ApplicationDBContext>(options => 
         options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<ApplicationDBContext>();
+builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddEntityFrameworkStores<ApplicationDBContext>();
+builder.Services.AddRazorPages(); // Added to use Identity pages for Login/ register. etc...
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>(); // Categories 
 
 var app = builder.Build();
@@ -29,7 +31,9 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-app.UseAuthorization(); 
+app.UseAuthentication(); // Added up 
+app.UseAuthorization();
+app.MapRazorPages(); // Added to use Identity Razor Pages. Login/ Register, etc. 
 
 app.MapControllerRoute(
     name: "default",
