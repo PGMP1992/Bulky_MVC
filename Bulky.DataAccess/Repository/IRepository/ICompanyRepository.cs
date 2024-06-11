@@ -7,4 +7,3 @@ namespace Bulky.DataAccess.Repository.IRepository
         void Update(Company obj);
     }
 }
-

@@ -14,39 +14,14 @@ namespace Bulky.DataAccess.Repository
     {
         private ApplicationDBContext _db;
 
-        public CompanyRepository((ApplicationDBContext db) : base(db)
+        public CompanyRepository(ApplicationDBContext db) : base(db)
         {
             _db = db;    
         }
 
-        public void Add(Company entity)
+        public void Update(Company obj)
         {
-            throw new NotImplementedException();
-        }
-
-        public Company Get(Expression<Func<Company, bool>> filter, string? includeProperties = null)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<Company> GetAll(string? includeProperties = null)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Remove(Company entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void RemoveRange(IEnumerable<Company> entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Update(ICompanyRepository obj)
-        {
-            throw new NotImplementedException();
+            _db.Companies.Update(obj);
         }
     }
 }
