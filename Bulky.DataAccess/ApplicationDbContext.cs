@@ -25,6 +25,7 @@ namespace Bulky.DataAccess
             // Added to enable Identity 
             base.OnModelCreating(modelBuilder); 
 
+            // Categories 
             modelBuilder.Entity<Category>().HasData(
                 new Category { Id = 1, Name = "Action", DisplayOrder = 1 },
                 new Category { Id = 2, Name = "Sci-Fi", DisplayOrder = 2 },
@@ -34,6 +35,7 @@ namespace Bulky.DataAccess
                 new Category { Id = 6, Name = "Romance", DisplayOrder = 6 }
             );
 
+            // Products 
             modelBuilder.Entity<Product>().HasData(
                 new Product {
                 Id = 1,
