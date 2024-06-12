@@ -12,6 +12,7 @@ namespace Bulky.DataAccess.Repository
             _db = db;
         }
 
+        // Have to Implement for ImageUrl 
         public void Update(Product obj)
         {
             var objFromDb = _db.Products.FirstOrDefault(x => x.Id == obj.Id);
