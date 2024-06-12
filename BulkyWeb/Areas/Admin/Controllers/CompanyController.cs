@@ -1,10 +1,8 @@
 ﻿using Bulky.DataAccess.Repository.IRepository;
-using Bulky.Models.ViewModels;
 using Bulky.Models;
 using Bulky.Utility;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace BulkyWeb.Areas.Admin.Controllers
 {
@@ -41,7 +39,7 @@ namespace BulkyWeb.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult Upsert( Company company) 
+        public IActionResult Upsert(Company company)
         {
             if (ModelState.IsValid)
             {
@@ -85,7 +83,7 @@ namespace BulkyWeb.Areas.Admin.Controllers
 
             return Json(new { success = true, message = "Delete Successful" });
         }
-        
+
         #endregion
     }
 }
