@@ -5,7 +5,7 @@ namespace Bulky.DataAccess.Repository.IRepository
     public interface IRepository<T> where T : class
     {
         //T - Category
-        IEnumerable<T> GetAll(string? includeProperties = null);
+        IEnumerable<T> GetAll(Expression<Func<T, bool>>? filter=null, string? includeProperties = null);
         
         // Added tracked to stop EF tracking object and updating without the Update() - Very strange bug. - PM 
         //T Get(Expression<Func<T, bool>> filter, string? includeProperties = null);

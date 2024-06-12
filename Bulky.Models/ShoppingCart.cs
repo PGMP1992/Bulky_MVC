@@ -6,7 +6,7 @@ namespace Bulky.Models
 {
     public class ShoppingCart
     {
-        public int id { get; set; }
+        public int Id { get; set; }
 
         public int ProductId { get; set; }
         [ForeignKey("ProductId")]
@@ -20,5 +20,8 @@ namespace Bulky.Models
         [ForeignKey("ApplicationUserId")]
         [ValidateNever]
         public ApplicationUser ApplicationUser { get; set; }
+
+        [NotMapped]
+        public double Price {  get; set; }
     }
 }

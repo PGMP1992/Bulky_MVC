@@ -14,7 +14,7 @@ namespace BulkyWeb.Areas.Admin.Controllers
     public class CompanyController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IWebHostEnvironment _webHostEnvironment;
+        //private readonly IWebHostEnvironment _webHostEnvironment;
 
         public CompanyController(IUnitOfWork unitOfWork)
         {
