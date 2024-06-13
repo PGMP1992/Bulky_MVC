@@ -1,9 +1,13 @@
 ﻿@model Bulky.Models.Category
 
 <div class="card shadow border-0 mt-4">
-    <div class="row">
-        <div class="col-12 text-center">
-            <h2 class="text-black py-2">Delete Category</h2>
+    <div class="card-header bg-secondary bg-gradient text-light ml-0 py-4">
+        <div class="row px-4">
+            <div class="col-6">
+                <h5 class="pt-2 text-white">
+                    Delete Category
+                </h5>
+            </div>
         </div>
     </div>
 
@@ -19,7 +23,6 @@
                     <input asp-for="DisplayOrder" disabled class="form-control border-0 shadow" />
                     <label asp-for="DisplayOrder" class="ms-2"></label>
                 </div>
-                @* <div asp-validation-summary="All" text-danger></div> *@
                 <div class="row mt-3">
                     <div class="col-6 col-md-3">
                         <button type="submit" class="btn btn-danger form-control">Delete</button>
@@ -33,6 +36,5 @@
 
             </div>
         </form>
-
     </div>
-
+</div>
