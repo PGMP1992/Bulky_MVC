@@ -4,7 +4,11 @@ using Bulky.Models.ViewModels;
 using Bulky.Utility;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Stripe;
+using Stripe.BillingPortal;
+using Stripe.Checkout;
 using System.Security.Claims;
+using static System.Net.WebRequestMethods;
 
 namespace BulkyWeb.Areas.Customer.Controllers
 {
@@ -122,17 +126,81 @@ namespace BulkyWeb.Areas.Customer.Controllers
 				_unitOfWork.Save();
 			}
 
-			// Normal Customer get Payment using Stripe 
+            // Normal Customer get Payment using Stripe
+            
             if (applicationUser.CompanyId.GetValueOrDefault() == 0)
 			{
-			    	
-			}
+                // Uploaded below from https://docs.stripe.com/api/checkout/sessions/create?lang=dotnet
+                var domain = "https://localhost:7180/";
+                var options = new Stripe.Checkout.SessionCreateOptions
+                {
+                    SuccessUrl = domain + $"customer/cart/OrderConfirmation?id={ShoppingCartVM.OrderHeader.Id}",
+                    CancelUrl = domain + "customer/cart/index",
+                    LineItems = new List<SessionLineItemOptions>(), // inside foreach below
+                    Mode = "payment",
+                };
+
+                foreach( var item in ShoppingCartVM.ShoppingCartList)
+                {
+                    var sessionLineItem = new SessionLineItemOptions
+                    {
+                        PriceData = new SessionLineItemPriceDataOptions
+                        {
+                            UnitAmount = (long)(item.Price * 100), // if 11.25 convert to 1125
+                            Currency = "gbp",
+                            ProductData = new SessionLineItemPriceDataProductDataOptions
+                            {
+                                Name = item.Product.Title
+                            }
+                        },
+                        Quantity = item.Count
+                    };
+                    options.LineItems.Add(sessionLineItem);
+
+                }
+                var service = new Stripe.Checkout.SessionService();
+                // Original was just Session but had to declare Stripe.Checkout.Session instead - PM
+                Stripe.Checkout.Session session = service.Create(options);
+                
+                _unitOfWork.OrderHeader.UpdateStripePaymentId(ShoppingCartVM.OrderHeader.Id, session.Id, session.PaymentIntentId);
+                _unitOfWork.Save();
+                Response.Headers.Add("Location", session.Url);
+
+                return new StatusCodeResult(303);
+            }
 
             return RedirectToAction(nameof(OrderConfirmation), new { id = ShoppingCartVM.OrderHeader.Id });
         }
 
         public IActionResult OrderConfirmation( int id)
         {
+            OrderHeader orderHeader = _unitOfWork.OrderHeader.Get(u => u.Id == id, includeProperties: "ApplicationUser");
+            if (orderHeader.PaymentStatus != SD.PaymentStatusDelayedPayment)
+            {
+                //this is an order by customer
+
+                var service = new Stripe.Checkout.SessionService();
+                Stripe.Checkout.Session session = service.Get(orderHeader.SessionId);
+
+                if (session.PaymentStatus.ToLower() == "paid")
+                {
+                    _unitOfWork.OrderHeader.UpdateStripePaymentId(id, session.Id, session.PaymentIntentId);
+                    _unitOfWork.OrderHeader.UpdateStatus(id, SD.StatusApproved, SD.PaymentStatusApproved);
+                    _unitOfWork.Save();
+                }
+                //HttpContext.Session.Clear();
+
+            }
+
+            //_emailSender.SendEmailAsync(orderHeader.ApplicationUser.Email, "New Order - Bulky Book",
+            //    $"<p>New Order Created - {orderHeader.Id}</p>");
+
+            List<ShoppingCart> shoppingCarts = _unitOfWork.ShoppingCart
+                            .GetAll(u => u.ApplicationUserId == orderHeader.ApplicationUserId).ToList();
+
+            _unitOfWork.ShoppingCart.RemoveRange(shoppingCarts);
+            _unitOfWork.Save();
+
             return View(id);
         }
 
