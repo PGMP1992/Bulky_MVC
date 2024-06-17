@@ -1,9 +1,9 @@
 ﻿using Bulky.DataAccess.Repository.IRepository;
 using Bulky.Models;
+using Bulky.Models.ViewModels;
 using Bulky.Utility;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
+using Stripe.Climate;
 
 namespace BulkyWeb.Areas.Admin.Controllers
 {
@@ -22,6 +22,16 @@ namespace BulkyWeb.Areas.Admin.Controllers
             return View();
         }
 
+        public IActionResult Details(int orderId)
+        {
+            OrderVM orderVM = new()
+            {
+                OrderHeader = _unitOfWork.OrderHeader.Get(u => u.Id == orderId, includeProperties: "ApplicationUser"),
+                OrderDetail = _unitOfWork.OrderDetail.GetAll(u => u.OrderHeaderId == orderId, includeProperties: "Product")
+            };
+            return View(orderVM);
+        }
+        
 
         #region API CALLS
 
@@ -34,7 +44,7 @@ namespace BulkyWeb.Areas.Admin.Controllers
             switch (status)
             {
                 case "pending":
-                    orderHeaders = orderHeaders.Where( u=>u.PaymentStatus == SD.PaymentStatusDelayedPayment);
+                    orderHeaders = orderHeaders.Where(u => u.PaymentStatus == SD.PaymentStatusDelayedPayment);
                     break;
                 case "inprocess":
                     orderHeaders = orderHeaders.Where(u => u.OrderStatus == SD.StatusInProcess);
