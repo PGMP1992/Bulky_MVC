@@ -1,4 +1,5 @@
-﻿namespace Bulky.Models.ViewModels
+﻿using System.ComponentModel.DataAnnotations;
+namespace Bulky.Models.ViewModels
 {
     public class OrderVM
     {
