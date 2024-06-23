@@ -179,14 +179,16 @@
                                 </div>
                             </div>
                             @if (User.IsInRole(SD.Role_Admin) || User.IsInRole(SD.Role_Employee)) {
-                                <button type="submit" asp-action="UpdateOrderDetail" class="btn btn-warning form-control my-1">Update Order Details</button>
+                                <button type="submit" asp-action="UpdateOrderDetail" class="btn btn-warning form-control my-1">
+                                    Update Order Details</button>
                             }
                         </div>
                         <div class="col-12 col-lg-5 offset-lg-1">
                             <h4 class="d-flex justify-content-between align-items-center mb-3">
                                 <span class="text-primary">Order Summary</span>
                             </h4>
-                            <label class="btn btn-outline-primary form-control my-2">Order Status - @Model.OrderHeader.OrderStatus</label>
+                            <label class="btn btn-outline-primary form-control my-2">
+                                Order Status - @Model.OrderHeader.OrderStatus</label>
 
                             <ul class="list-group mb-3">
                                 @foreach (var detail in Model.OrderDetail) {
@@ -217,9 +219,11 @@
                             </ul>
 
                             @if (Model.OrderHeader.PaymentStatus == SD.PaymentStatusDelayedPayment &&
-                            Model.OrderHeader.OrderStatus == SD.StatusShipped) {
+                                Model.OrderHeader.OrderStatus == SD.StatusShipped) 
+                            {
                                 <button type="submit" class="btn btn-success form-control my-1">Pay Now</button>
                             }
+
                             @if (User.IsInRole(SD.Role_Admin) || User.IsInRole(SD.Role_Employee)) {
                                 @if (Model.OrderHeader.OrderStatus == SD.StatusApproved) {
                                     <button type="submit" asp-action="StartProcessing"
@@ -228,12 +232,13 @@
                                     </button>
                                 }
                                 @if (Model.OrderHeader.OrderStatus == SD.StatusInProcess) {
-                                    <button type="submit" asp-action="ShipOrder" onclick="return validateInput()" class="btn btn-primary form-control my-1">Ship Order</button>
+                                    <button type="submit" asp-action="ShipOrder" onclick="return validateInput()" 
+                                        class="btn btn-primary form-control my-1">Ship Order</button>
                                 }
 
                                 @if (Model.OrderHeader.OrderStatus != SD.StatusRefunded &&
-                               Model.OrderHeader.OrderStatus != SD.StatusCancelled &&
-                               Model.OrderHeader.OrderStatus != SD.StatusShipped) {
+                                    Model.OrderHeader.OrderStatus != SD.StatusCancelled &&
+                                    Model.OrderHeader.OrderStatus != SD.StatusShipped) {
                                     <button asp-action="CancelOrder" type="submit" class="btn btn-danger form-control my-1">Cancel Order</button>
                                 }
                             }

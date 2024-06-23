@@ -31,6 +31,15 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.AccessDeniedPath = $"/Identity/Account/AccessDenied";
 });
 
+// Cookies - Add Session 
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(100);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
+
 builder.Services.AddRazorPages();                           // Added to use Identity pages for Login/ register. etc...
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();      // Categories 
 builder.Services.AddScoped<IEmailSender, EmailSender>();    // Email in Identity/Pages/Account/Register.cshtml.cs
@@ -54,6 +63,7 @@ app.UseRouting();
 
 app.UseAuthentication(); // Added up 
 app.UseAuthorization();
+app.UseSession();
 app.MapRazorPages(); // Added to use Identity Razor Pages. Login/ Register, etc. 
 
 app.MapControllerRoute(
