@@ -363,3 +363,5 @@ MigrationBackup/
 FodyWeavers.xsd
 /BulkyWeb/appsettings.json
 /BulkyWeb/appsettings - Copy.json
+/BulkyWeb/Program.cs
+/BulkyWeb/appsettings.json
