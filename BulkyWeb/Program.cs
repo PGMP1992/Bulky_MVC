@@ -1,4 +1,5 @@
 using Bulky.DataAccess;
+using Bulky.DataAccess.DBInitializer;
 using Bulky.DataAccess.Repository;
 using Bulky.DataAccess.Repository.IRepository;
 using Bulky.Utility;
@@ -31,6 +32,14 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.AccessDeniedPath = $"/Identity/Account/AccessDenied";
 });
 
+// Facebook Authentication 
+builder.Services.AddAuthentication().AddFacebook(option =>
+{
+    option.AppId = "2486236911575218";
+    option.AppSecret = "9f2ace1680c3f65929f34bdd25ca52ab";
+
+});
+
 // Cookies - Add Session in Cart and _lAyout as well.
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options =>
@@ -40,6 +49,7 @@ builder.Services.AddSession(options =>
     options.Cookie.IsEssential = true;
 });
 
+builder.Services.AddScoped<IDBInitializer, DBInitializer>(); // Initialize Roles and Admin User in DB 
 builder.Services.AddRazorPages();                           // Added to use Identity pages for Login/ register. etc...
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();      // Categories 
 builder.Services.AddScoped<IEmailSender, EmailSender>();    // Email in Identity/Pages/Account/Register.cshtml.cs
@@ -64,6 +74,7 @@ app.UseRouting();
 app.UseAuthentication(); // Added up 
 app.UseAuthorization();
 app.UseSession();
+SeedDatabase();
 app.MapRazorPages(); // Added to use Identity Razor Pages. Login/ Register, etc. 
 
 app.MapControllerRoute(
@@ -71,3 +82,12 @@ app.MapControllerRoute(
     pattern: "{area=Customer}/{controller=Home}/{action=Index}/{id?}");
 
 app.Run();
+
+void SeedDatabase()
+{
+    using ( var scope = app.Services.CreateScope() )
+    {
+        var dbInitializer = scope.ServiceProvider.GetRequiredService<IDBInitializer>();
+        dbInitializer.Initialize();
+    }
+}
