@@ -12,7 +12,7 @@ using System.Security.Claims;
 namespace BulkyWeb.Areas.Admin.Controllers
 {
     [Area("admin")]
-    [Authorize(Roles = SD.Role_Admin)]
+    [Authorize]
 
     public class OrderController : Controller
     {

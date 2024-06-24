@@ -31,7 +31,7 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.AccessDeniedPath = $"/Identity/Account/AccessDenied";
 });
 
-// Cookies - Add Session 
+// Cookies - Add Session in Cart and _lAyout as well.
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options =>
 {

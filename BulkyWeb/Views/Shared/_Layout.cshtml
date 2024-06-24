@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Http; @* Add Session *@
+@inject IHttpContextAccessor HttpContextAccessor 
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -57,6 +60,10 @@
                                     </li>
                                 </ul>
                             </li>
+                        }
+                        @if(HttpContextAccessor.HttpContext.Session.GetInt32(SD.S,))
+                        {
+                            
                         }
                         <li class="nav-item">
                             <a class="nav-link" asp-area="Customer" asp-controller="Cart" asp-action="Index">
