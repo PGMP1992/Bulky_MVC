@@ -42,8 +42,7 @@ builder.Services.AddAuthentication().AddFacebook(option =>
 
 // Cookies - Add Session in Cart and _lAyout as well.
 builder.Services.AddDistributedMemoryCache();
-builder.Services.AddSession(options =>
-{
+builder.Services.AddSession(options => {
     options.IdleTimeout = TimeSpan.FromMinutes(100);
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
