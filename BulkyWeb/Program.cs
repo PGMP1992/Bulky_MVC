@@ -52,6 +52,10 @@ builder.Services.AddScoped<IDBInitializer, DBInitializer>(); // Initialize Roles
 builder.Services.AddRazorPages();                           // Added to use Identity pages for Login/ register. etc...
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();      // Categories 
 builder.Services.AddScoped<IEmailSender, EmailSender>();    // Email in Identity/Pages/Account/Register.cshtml.cs
+builder.Services.AddApplicationInsightsTelemetry(new Microsoft.ApplicationInsights.AspNetCore.Extensions.ApplicationInsightsServiceOptions
+{
+    ConnectionString = builder.Configuration["APPLICATIONINSIGHTS_CONNECTION_STRING"]
+});
 
 var app = builder.Build();
 
