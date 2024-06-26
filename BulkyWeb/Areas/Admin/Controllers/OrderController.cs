@@ -92,7 +92,7 @@ namespace BulkyWeb.Areas.Admin.Controllers
 
             if(orderHeader.PaymentStatus == SD.PaymentStatusDelayedPayment)
             {
-                orderHeader.PaymentDateDue = DateOnly.FromDateTime(DateTime.Now.AddDays(30)); 
+                orderHeader.PaymentDateDue = DateTime.Now.AddDays(30); 
             }
 
             _unitOfWork.OrderHeader.Update(orderHeader);
@@ -144,7 +144,7 @@ namespace BulkyWeb.Areas.Admin.Controllers
 
             //Stripe Logic 
             // Uploaded below from https://docs.stripe.com/api/checkout/sessions/create?lang=dotnet
-            var domain = "https://localhost:7180/";
+            var domain = Request.Scheme + "://" + Request.Host.Value + "/";
             var options = new Stripe.Checkout.SessionCreateOptions
             {
                 SuccessUrl = domain + $"admin/order/PaymentConfirmation?orderHeaderId={OrderVM.OrderHeader.Id}",

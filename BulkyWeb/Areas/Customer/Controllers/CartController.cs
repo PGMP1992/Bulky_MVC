@@ -131,7 +131,7 @@ namespace BulkyWeb.Areas.Customer.Controllers
             if (applicationUser.CompanyId.GetValueOrDefault() == 0)
 			{
                 // Uploaded below from https://docs.stripe.com/api/checkout/sessions/create?lang=dotnet
-                var domain = "https://localhost:7180/";
+                var domain = Request.Scheme + "://"+ Request.Host.Value + "/";
                 var options = new Stripe.Checkout.SessionCreateOptions
                 {
                     SuccessUrl = domain + $"customer/cart/OrderConfirmation?id={ShoppingCartVM.OrderHeader.Id}",
