@@ -9,10 +9,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="Areas\Admin\Views\Order\PaymentConfirmation.cshtml" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Remove="appsettings.Production.json Original" />
   </ItemGroup>
 
@@ -55,19 +51,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <UpToDateCheckInput Remove="Areas\Admin\Views\Order\PaymentConfirmation.cshtml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <_ContentIncludedByDefault Remove="Areas\Admin\Views\Order\PaymentConfirmation.cshtml" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Content Include="appsettings.Production.json Original" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Include="Areas\Admin\Views\Order\PaymentConfirmation.cshtml" />
-  </ItemGroup>
-
-</Project>
+ </Project>
