@@ -1,9 +1,11 @@
 ﻿using Bulky.DataAccess;
+using Bulky.DataAccess.Repository;
 using Bulky.DataAccess.Repository.IRepository;
 using Bulky.Models;
 using Bulky.Models.ViewModels;
 using Bulky.Utility;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -17,11 +19,13 @@ namespace BulkyWeb.Areas.Admin.Controllers
     public class UserController : Controller
     {
         private readonly ApplicationDBContext _db;
-        //private readonly IWebHostEnvironment _webHostEnvironment;
-
-        public UserController(ApplicationDBContext db)
+        private readonly UserManager<IdentityUser> _userManager;
+              
+        
+        public UserController(ApplicationDBContext db, UserManager<IdentityUser> userManager)
         {
             _db = db;
+            _userManager = userManager;
         }
 
         public IActionResult Index()
@@ -29,7 +33,7 @@ namespace BulkyWeb.Areas.Admin.Controllers
             return View();
         }
 
-        public IActionResult RoleManage(string userId)
+        public IActionResult RoleManagement(string userId)
         {
             var roleId = _db.UserRoles.FirstOrDefault(u => u.UserId == userId).RoleId;
             RoleManagementVM RoleVM = new RoleManagementVM
@@ -50,6 +54,33 @@ namespace BulkyWeb.Areas.Admin.Controllers
             return View(RoleVM);
         }
 
+        [HttpPost]
+        public IActionResult RoleManagement(RoleManagementVM roleManagementVM)
+        {
+
+            string roleId = _db.UserRoles.FirstOrDefault(u => u.UserId == roleManagementVM.ApplicationUser.Id).RoleId;
+            string oldRole = _db.Roles.FirstOrDefault(u => u.Id == roleId).Name;
+
+            if (!(roleManagementVM.ApplicationUser.Role == oldRole))
+            {
+                ApplicationUser applicationUser = _db.ApplicationUsers.FirstOrDefault(u => u.Id == roleManagementVM.ApplicationUser.Id);
+                //a role was updated
+                if (! (roleManagementVM.ApplicationUser.Role == SD.Role_Company));
+                {
+                    applicationUser.CompanyId = roleManagementVM.ApplicationUser.CompanyId;
+                }
+                if (oldRole == SD.Role_Company)
+                {
+                    applicationUser.CompanyId = null;
+                }
+                _db.SaveChanges();
+
+                _userManager.RemoveFromRoleAsync(applicationUser, oldRole).GetAwaiter().GetResult();
+                _userManager.AddToRoleAsync(applicationUser, roleManagementVM.ApplicationUser.Role).GetAwaiter().GetResult();
+            }
+
+            return RedirectToAction("Index");
+        }
 
         // --------------------------------------------------
 

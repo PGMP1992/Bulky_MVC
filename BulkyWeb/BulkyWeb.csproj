@@ -54,4 +54,8 @@
     <Content Include="appsettings.Production.json Original" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="wwwroot\js\user.js" />
+  </ItemGroup>
+
  </Project>
