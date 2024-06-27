@@ -1,10 +1,13 @@
 ﻿using Bulky.DataAccess;
 using Bulky.DataAccess.Repository.IRepository;
 using Bulky.Models;
+using Bulky.Models.ViewModels;
 using Bulky.Utility;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration.UserSecrets;
 
 namespace BulkyWeb.Areas.Admin.Controllers
 {
@@ -25,7 +28,29 @@ namespace BulkyWeb.Areas.Admin.Controllers
         {
             return View();
         }
-        
+
+        public IActionResult RoleManage(string userId)
+        {
+            var roleId = _db.UserRoles.FirstOrDefault(u => u.UserId == userId).RoleId;
+            RoleManagementVM RoleVM = new RoleManagementVM
+            {
+                ApplicationUser = _db.ApplicationUsers.Include(c => c.Company).FirstOrDefault(u => u.Id == userId),
+                RoleList =_db.Roles.Select(i => new SelectListItem { 
+                    Text = i.Name,
+                    Value = i.Name
+                }),
+                CompanyList = _db.Companies.Select(i => new SelectListItem
+                {
+                    Text = i.Name,
+                    Value = i.Id.ToString()
+                }),
+            };
+            RoleVM.ApplicationUser.Role = _db.Roles.FirstOrDefault(u => u.Id == roleId).Name;
+            
+            return View(RoleVM);
+        }
+
+
         // --------------------------------------------------
 
         #region API CALLS
