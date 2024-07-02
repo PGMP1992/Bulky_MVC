@@ -120,6 +120,28 @@ namespace BulkyWeb.Areas.Admin.Controllers
             }
         }
 
+        public IActionResult DeleteImage(int imageId)
+        {
+            var image = _unitOfWork.ProductImage.Get(u => u.Id == imageId);
+            var productId = image.ProductId;
+            if (image != null)
+            {
+                if (!string.IsNullOrEmpty(image.ImageUrl))
+                {
+                    var oldImagePath = Path.Combine(_webHostEnvironment.WebRootPath, image.ImageUrl.TrimStart('\\'));
+                    if (System.IO.File.Exists(oldImagePath))
+                    {
+                        System.IO.File.Delete(oldImagePath);
+
+                    }
+                    _unitOfWork.ProductImage.Remove(image);
+                    _unitOfWork.Save();
+                    TempData["success"] = "Image Deleted.";
+                }
+
+            }
+            return RedirectToAction(nameof(Upsert), new {id = productId});
+        }
         /* Replaced Edit above in Upsert ------------------------------ 
          * and Delete with API Call below 
         
@@ -202,18 +224,18 @@ namespace BulkyWeb.Areas.Admin.Controllers
             }
 
             // Delete ImageUrl first 
-            //string productPath = @"images\products\product-" + id;
-            //string finalPath = Path.Combine(_webHostEnvironment.WebRootPath, productPath);
+            string productPath = @"images\products\product-" + id;
+            string finalPath = Path.Combine(_webHostEnvironment.WebRootPath, productPath);
 
-            //if (Directory.Exists(finalPath))
-            //{
-            //    string[] filePaths = Directory.GetFiles(finalPath);
-            //    foreach (string filePath in filePaths)
-            //    {
-            //        System.IO.File.Delete(filePath);
-            //    }
-            //    Directory.Delete(finalPath);
-            //}
+            if (!Directory.Exists(finalPath))
+            {
+                string[] filePaths = Directory.GetFiles(finalPath);
+                foreach (string filePath in filePaths)
+                {
+                    System.IO.File.Delete(filePath);
+                }
+                Directory.Delete(finalPath);
+            }
 
             _unitOfWork.Product.Remove(productToBeDeleted);
             _unitOfWork.Save();
