@@ -55,28 +55,29 @@ namespace BulkyWeb.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult RoleManagement(RoleManagementVM roleManagementVM)
+        public IActionResult RoleManagement(RoleManagementVM roleManVM)
         {
 
-            string roleId = _db.UserRoles.FirstOrDefault(u => u.UserId == roleManagementVM.ApplicationUser.Id).RoleId;
+            string roleId = _db.UserRoles.FirstOrDefault(u => u.UserId == roleManVM.ApplicationUser.Id).RoleId;
             string oldRole = _db.Roles.FirstOrDefault(u => u.Id == roleId).Name;
 
-            if (!(roleManagementVM.ApplicationUser.Role == oldRole))
+            if (!(roleManVM.ApplicationUser.Role == oldRole))
             {
-                ApplicationUser applicationUser = _db.ApplicationUsers.FirstOrDefault(u => u.Id == roleManagementVM.ApplicationUser.Id);
+                ApplicationUser applicationUser = _db.ApplicationUsers.FirstOrDefault(u => u.Id == roleManVM.ApplicationUser.Id);
                 //a role was updated
-                if (! (roleManagementVM.ApplicationUser.Role == SD.Role_Company));
+                if (! (roleManVM.ApplicationUser.Role == SD.Role_Company));
                 {
-                    applicationUser.CompanyId = roleManagementVM.ApplicationUser.CompanyId;
+                    applicationUser.CompanyId = roleManVM.ApplicationUser.CompanyId;
                 }
                 if (oldRole == SD.Role_Company)
                 {
                     applicationUser.CompanyId = null;
                 }
-                _db.SaveChanges();
+                _db.ApplicationUsers.Update(applicationUser);
 
                 _userManager.RemoveFromRoleAsync(applicationUser, oldRole).GetAwaiter().GetResult();
-                _userManager.AddToRoleAsync(applicationUser, roleManagementVM.ApplicationUser.Role).GetAwaiter().GetResult();
+                _userManager.AddToRoleAsync(applicationUser, roleManVM.ApplicationUser.Role).GetAwaiter().GetResult();
+                _db.SaveChanges();
             }
 
             return RedirectToAction("Index");
