@@ -37,8 +37,12 @@ namespace BulkyWeb.Areas.Customer.Controllers
                 OrderHeader = new()
             };
 
+            IEnumerable<ProductImage> prodImages = _unitOfWork.ProductImage.GetAll();
+
+
             foreach( var cart in ShoppingCartVM.ShoppingCartList)
             {
+                cart.Product.ProductImages = prodImages.Where(u => u.ProductId == cart.ProductId).ToList();
                 cart.Price = GetPriceBasedOnQuantity(cart);
                 ShoppingCartVM.OrderHeader.OrderTotal += (cart.Price * cart.Count); 
             }
@@ -83,7 +87,7 @@ namespace BulkyWeb.Areas.Customer.Controllers
 			var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
 
 			ShoppingCartVM.ShoppingCartList = _unitOfWork.ShoppingCart.GetAll(u => u.ApplicationUserId == userId,
-					includeProperties: "Product");
+					includeProperties: "Product,ProductImages");
 
 			// Sets date to Today 
             ShoppingCartVM.OrderHeader.OrderDate = System.DateTime.Now;
