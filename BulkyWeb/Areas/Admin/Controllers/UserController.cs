@@ -20,7 +20,6 @@ namespace BulkyWeb.Areas.Admin.Controllers
     {
         private readonly ApplicationDBContext _db;
         private readonly UserManager<IdentityUser> _userManager;
-              
         
         public UserController(ApplicationDBContext db, UserManager<IdentityUser> userManager)
         {
