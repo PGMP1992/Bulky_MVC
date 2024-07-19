@@ -1,6 +1,4 @@
-﻿using Bulky.DataAccess;
-using Bulky.DataAccess.Repository;
-using Bulky.DataAccess.Repository.IRepository;
+﻿using Bulky.DataAccess.Repository.IRepository;
 using Bulky.Models;
 using Bulky.Models.ViewModels;
 using Bulky.Utility;
@@ -8,8 +6,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using static Microsoft.ApplicationInsights.MetricDimensionNames.TelemetryContext;
 
 namespace BulkyWeb.Areas.Admin.Controllers
 {
@@ -38,7 +34,7 @@ namespace BulkyWeb.Areas.Admin.Controllers
         {
             RoleManagementVM RoleVM = new RoleManagementVM
             {
-                ApplicationUser = _unitOfWork.ApplicationUser.Get(u => u.Id == userId, includeProperties:"Company"),
+                ApplicationUser = _unitOfWork.ApplicationUser.Get(u => u.Id == userId, includeProperties: "Company"),
                 RoleList = _roleManager.Roles.Select(i => new SelectListItem
                 {
                     Text = i.Name,
@@ -67,7 +63,7 @@ namespace BulkyWeb.Areas.Admin.Controllers
 
             if (!(roleManVM.ApplicationUser.Role == oldRole))
             {
-               
+
                 //a role was updated
                 if (!(roleManVM.ApplicationUser.Role == SD.Role_Company)) ;
                 {
@@ -103,7 +99,7 @@ namespace BulkyWeb.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            List<ApplicationUser> objUserList = _unitOfWork.ApplicationUser.GetAll(includeProperties:"Company").ToList();
+            List<ApplicationUser> objUserList = _unitOfWork.ApplicationUser.GetAll(includeProperties: "Company").ToList();
             // Using AspNetUserRoles and AspNetRoles tables
             // - excluding the AspNet from the table name for all Identity tables works  
 
