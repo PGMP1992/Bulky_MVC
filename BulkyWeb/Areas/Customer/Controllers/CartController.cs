@@ -87,7 +87,7 @@ namespace BulkyWeb.Areas.Customer.Controllers
 			var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
 
 			ShoppingCartVM.ShoppingCartList = _unitOfWork.ShoppingCart.GetAll(u => u.ApplicationUserId == userId,
-					includeProperties: "Product,ProductImages");
+                includeProperties: "Product");
 
 			// Sets date to Today 
             ShoppingCartVM.OrderHeader.OrderDate = System.DateTime.Now;

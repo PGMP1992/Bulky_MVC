@@ -211,7 +211,7 @@ namespace BulkyWeb.Areas.Admin.Controllers
 
 #region API CALLS
 
-[HttpGet]
+        [HttpGet]
         public IActionResult GetAll(string status)
         {
             IEnumerable<OrderHeader> orderHeaders;
