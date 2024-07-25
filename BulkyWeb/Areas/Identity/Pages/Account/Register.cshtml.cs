@@ -13,7 +13,6 @@ using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.WebUtilities;
-using NuGet.Protocol.Plugins;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 using System.Text.Encodings.Web;
@@ -111,7 +110,7 @@ namespace BulkyWeb.Areas.Identity.Pages.Account
 
             [Required]
             public string Name { get; set; }
-            public string? StreetAddress {get; set;}
+            public string? StreetAddress { get; set; }
             public string? City { get; set; }
             public string? State { get; set; }
             public string? PostalCode { get; set; }
@@ -125,7 +124,7 @@ namespace BulkyWeb.Areas.Identity.Pages.Account
         public async Task OnGetAsync(string returnUrl = null)
         {
             // Adding Roles - PM
-            if(! _roleManager.RoleExistsAsync(SD.Role_Customer).GetAwaiter().GetResult())
+            if (!_roleManager.RoleExistsAsync(SD.Role_Customer).GetAwaiter().GetResult())
             {
                 _roleManager.CreateAsync(new IdentityRole(SD.Role_Customer)).GetAwaiter().GetResult();
                 _roleManager.CreateAsync(new IdentityRole(SD.Role_Employee)).GetAwaiter().GetResult();
@@ -147,8 +146,8 @@ namespace BulkyWeb.Areas.Identity.Pages.Account
                     Text = i.Name,
                     Value = i.Id.ToString()
                 })
-            }; 
-            
+            };
+
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         }
@@ -171,7 +170,7 @@ namespace BulkyWeb.Areas.Identity.Pages.Account
                 user.PostalCode = Input.PostalCode;
                 user.PhoneNumber = Input.PhoneNumber;
 
-                if(Input.Role == SD.Role_Company)
+                if (Input.Role == SD.Role_Company)
                 {
                     user.CompanyId = Input.CompanyId;
                 }
@@ -183,7 +182,7 @@ namespace BulkyWeb.Areas.Identity.Pages.Account
                     _logger.LogInformation("User created a new account with password.");
 
                     // Added for Roles - PM
-                    if( !String.IsNullOrEmpty(Input.Role))
+                    if (!String.IsNullOrEmpty(Input.Role))
                     {
                         await _userManager.AddToRoleAsync(user, Input.Role);
                     }
@@ -210,9 +209,12 @@ namespace BulkyWeb.Areas.Identity.Pages.Account
                     }
                     else
                     {
-                        if (User.IsInRole(SD.Role_Admin)) {
+                        if (User.IsInRole(SD.Role_Admin))
+                        {
                             TempData["sucess"] = "New User Created!";
-                        } else {
+                        }
+                        else
+                        {
                             await _signInManager.SignInAsync(user, isPersistent: false);
                         }
                         return LocalRedirect(returnUrl);
