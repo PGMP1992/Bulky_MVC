@@ -2,15 +2,14 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System.Reflection;
+using Microsoft.Extensions.Options;
 
 namespace Bulky.DataAccess
 {
     public class ApplicationDBContext : IdentityDbContext<IdentityUser>
     {
-        public ApplicationDBContext(DbContextOptions<ApplicationDBContext> options) : base(options)
+        public ApplicationDBContext(DbContextOptions options) : base(options)
         {
-
         }
 
         public DbSet<Category> Categories { get; set; }

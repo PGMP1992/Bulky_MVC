@@ -8,7 +8,7 @@
   "AllowedHosts": "*",
   "ConnectionStrings": {
     //"DefaultConnection": "Server=(LocalDb)\\MSSQLLocalDB;Database=Bulky;Trusted_Connection=True;TrustServerCertificate=True"
-    "DefaultConnection": "Server=tcp:pmdev.database.windows.net,1433;Initial Catalog=Bulky;Persist Security Info=False;User ID=sqladmin;Password=Password1_;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"
+    "DefaultConnection": "Server=tcp:pmdev.database.windows.net,1433;Initial Catalog=Books;Persist Security Info=False;User ID=sqladmin;Password=Password1_;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"
   },
   "Stripe": {
     "SecretKey": "sk_test_51PRDzQKevjY9mcz1I2oiuBUiPrXOYaFiwWhuAfKPgTWBPvaGBwEJYPTRaNy3eLzeW4Cyw0dtl1oS3PUTj3FH4CR600GwvD890u",
