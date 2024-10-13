@@ -12,8 +12,13 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+// SQL Server -----------------------
 builder.Services.AddDbContext<ApplicationDBContext>(options =>
         options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+// MySql -----------------------
+//builder.Services.AddDbContext<ApplicationDBContext>(options =>
+//        options.UseMySQL(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Stripe
 builder.Services.Configure<StripeSettings>(builder.Configuration.GetSection("Stripe"));
