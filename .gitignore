@@ -365,3 +365,5 @@ FodyWeavers.xsd
 /BulkyWeb/appsettings - Copy.json
 /BulkyWeb/Program.cs
 /BulkyWeb/appsettings.json
+/BulkyWeb/appsettings.Development.json
+/BulkyWeb/appsettings.Production.json
