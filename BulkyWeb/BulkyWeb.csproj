@@ -5,6 +5,8 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <ApplicationInsightsResourceId>/subscriptions/23dfa5e3-92ae-480c-aaa4-baa4ee67d0f7/resourceGroups/DefaultResourceGroup-SEC/providers/microsoft.insights/components/devBulky</ApplicationInsightsResourceId>
+	  <AspNetCoreHostingModel>OutOfProcess</AspNetCoreHostingModel>
+	  <ServerGarbageCollection>false</ServerGarbageCollection>
   </PropertyGroup>
 
   <ItemGroup>
