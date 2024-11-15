@@ -1,32 +1,23 @@
 ﻿@model List<Category>
 <partial name="_Notification" />
+@* <h2 class="bg-primary text-light p-2">Category List</h2> *@
+<div class="card border-1  mt-4">
 
-<div class="card shadow border-0 mt-4">
-    <div class="card-header bg-secondary bg-gradient text-light ml-0 py-4">
-        <div class="row px-4">
-            <div class="col-6">
-                <h5 class="pt-2 text-white">
-                    Category List
-                </h5>
-            </div>
-        </div>
+    <div class="card-header ml-0 bg-primary text-light py-2">
+        <h3 class="pt-2">Category List</h3>
     </div>
 
     <div class="card-body p-4">
-        <div class="rowpb-3">
-            <div class="col-6">
-            </div>
-            <div class="col-12 text-end">
-                <a asp-controller="Category" asp-action="Create" class="btn btn-primary">
-                    <i class="bi bi-plus-circle"></i> Create
-                </a>
-            </div>
+        <div class="col-12 text-end">
+            <a asp-controller="Category" asp-action="Create" class="btn btn-outline-primary">
+                <i class="bi bi-plus-circle"></i> Create
+            </a>
         </div>
 
-        <table class="table table-bordered table-striped">
+        <table class="table">
             <thead>
                 <tr>
-                    <th>Category Name</th>
+                    <th class="text-capitalize">Category Name</th>
                     <th>Display Order</th>
                     <th></th>
                 </tr>
@@ -38,7 +29,7 @@
                         <td>@obj.Name</td>
                         <td>@obj.DisplayOrder</td>
                         <td>
-                            <div class="w-75 btn-group">
+                            <div class="btn-group">
                             <a asp-controller = "Category" asp-action = "Edit" asp-route-id="@obj.Id" class="btn btn-primary mx-2">
                                 <i class="bi bi-pencil-square"></i> Edit
                             </a>
