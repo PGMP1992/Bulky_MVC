@@ -3,7 +3,7 @@
 <form method="post">
 	<br />
 	<div class="container">
-		<div class="card shadow border-0">
+		<div class="card">
 
 			<div class="card-header bg-secondary bg-gradient text-light ml-0 py-4">
 				<div class="row px-4">
@@ -90,10 +90,10 @@
 								@foreach( var details in Model.ShoppingCartList)
 								{
 									<li class="list-group-item d-flex justify-content-between">
-									<div>
-										<h6 class="my-0">@details.Product.Title</h6>
-										<small class="text-muted">@details.Count</small>
-									</div>
+										<div>
+											<h6 class="my-0">@details.Product.Title</h6>
+											<small class="text-muted">@details.Count</small>
+										</div>
 										<span class="text-muted">@((details.Price * details.Count).ToString("c")) </span>
 									</li>
 								}
@@ -116,7 +116,13 @@
 						</p>
 					</div>
 					<div class="col-12 col-md-4">
-						<button type="submit" value="Place Order" class="btn btn-primary form-control">Place Order</button>
+						@if (Model.ShoppingCartList.Any())
+						{
+							<button type="submit" value="Place Order" class="btn btn-primary form-control">Place Order</button>
+						} else
+						{
+							<button type="submit" value="Place Order" class="btn btn-primary form-control" disabled>Place Order</button>
+						}
 					</div>
 				</div>
 			</div>

@@ -1,6 +1,6 @@
 ﻿@model Company
 
-<div class="card shadow border-0 mt-4">
+<div class="card border-1 mt-4">
     <div class="card-header bg-secondary bg-gradient text-light ml-0 py-4">
         <div class="row px-4">
             <div class="col-6">
@@ -11,44 +11,44 @@
         </div>
     </div>
 
-    <div class="card-body p-4">
+    <div class="card-body p-4 ">
         <form method="post" class="row">
             <input asp-for="Id" hidden />
-            <div class="row"> 
+            <div class="row">
                 <div class="col-12">
                     
-                    <div class="border p-3">
-                        <div class="py-2 col-12">
-                            <input asp-for="Name" class="form-control border-0 shadow" />
+                    <div class="p-3 border-0">
+                        <div class="form-floating py-2 col-12">
+                            <input asp-for="Name" class="form-control" />
                             <label asp-for="Name" class="ms-2"></label>
                             <span asp-validation-for="Name" class="text-danger"></span>
                         </div>
 
                         <div class="form-floating py-2 col-12">
+                            <input asp-for="StreetAddress" class="form-control"></input>
                             <label asp-for="StreetAddress" class="ms-2 text-muted"></label>
-                            <textarea asp-for="StreetAddress" class="form-control border-0 shadow"></textarea>
                         </div>
 
                         <div class="form-floating py-2 col-12">
-                            <input asp-for="City" class="form-control border-0 shadow" />
+                            <input asp-for="City" class="form-control" />
                             <label asp-for="City" class="ms-2"></label>
                             <span asp-validation-for="City" class="text-danger"></span>
                         </div>
 
                         <div class="form-floating py-2 col-12">
-                            <input asp-for="State" class="form-control border-0 shadow" />
+                            <input asp-for="State" class="form-control" />
                             <label asp-for="State" class="ms-2"></label>
                             <span asp-validation-for="State" class="text-danger"></span>
                         </div>
 
                         <div class="form-floating py-2 col-12">
-                            <input asp-for="PostalCode" class="form-control border-0 shadow" />
+                            <input asp-for="PostalCode" class="form-control" />
                             <label asp-for="PostalCode" class="ms-2"></label>
                             <span asp-validation-for="PostalCode" class="text-danger"></span>
                         </div>
 
                         <div class="form-floating py-2 col-12">
-                            <input asp-for="PhoneNumber" class="form-control border-0 shadow" />
+                            <input asp-for="PhoneNumber" class="form-control" />
                             <label asp-for="PhoneNumber" class="ms-2"></label>
                             <span asp-validation-for="PhoneNumber" class="text-danger"></span>
                         </div>
