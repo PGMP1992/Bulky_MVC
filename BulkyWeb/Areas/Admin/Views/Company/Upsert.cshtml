@@ -26,7 +26,8 @@
 
                         <div class="form-floating py-2 col-12">
                             <input asp-for="StreetAddress" class="form-control"></input>
-                            <label asp-for="StreetAddress" class="ms-2 text-muted"></label>
+                            <label asp-for="StreetAddress" class="ms-2 text-muted">Address</label>
+                            <span asp-validation-for="StreetAddress" class="text-danger"></span>
                         </div>
 
                         <div class="form-floating py-2 col-12">
