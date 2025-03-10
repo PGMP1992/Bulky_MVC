@@ -4,24 +4,70 @@
 @inject UserManager<IdentityUser> UserManager
 
 <ul class="navbar-nav">
-@if (SignInManager.IsSignedIn(User))
-{
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <li class="nav-item">
+            <a id="manage" class="nav-link" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @UserManager.GetUserName(User)!</a>
+        </li>
+        <li class="nav-item">
+            <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                <button id="logout" type="submit" class="nav-link btn btn-link border-0">Logout</button>
+            </form>
+        </li>
+    }
+    else
+    {
+        <li class="nav-item">
+            <a class="nav-link" id="register" asp-area="Identity" asp-page="/Account/Register">Register</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="login" asp-area="Identity" asp-page="/Account/Login">Login</a>
+        </li>
+    }
     <li class="nav-item">
-        <a id="manage" class="nav-link" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @UserManager.GetUserName(User)!</a>
+        <a class="nav-link text-danger" data-bs-toggle="modal" data-bs-target="#infoModal">
+            <i class="bi bi-info-circle-fill"></i>
+        </a>
+        
+        <div class="modal fade" id="infoModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title text-danger fs-5" id="exampleModalLabel">Books App Functionality</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="h6 text-info">Following are the User Accounts that exist by default (Password: Admin123*): </div>
+                        <p>Admin User :      <b>admin@host.com</b> </p>
+                        <p>Individual User : <b>user1@email.com</b></p>
+                        <p>Company User :    <b>company@email.com</b></p>
+                        <div class="h6 text-info">How to use the website:</div>
+                        <p>This website is intended to serve as demo application.</p>
+                        <p>Users can place an order after adding items to cart.</p>
+                        <p>Once an Order is placed you can login as Admin User and manage orders to see the flow of the application.</p>
+                        <p>In order to place an order you can use any test credit card number supported by Stripe.</p>
+                        <p>A default example is 4242 4242 4242 4242, valid date, any 3 digit CVV.</p>
+                        <div class="row justify-content-between">
+                            <div class="col-6">
+                                <a href="mailto:pedro@dkltd.net">
+                                    <i class="bi bi-envelope-fill"></i>
+                                    Email
+                                </a>
+                            </div>
+                            <div class="col-6">
+                                <a href="https://www.linkedin.com/in/pedro-martinez-70077691" target="_blank">
+                                    <i class="bi bi-linkedin"></i>
+                                    Linkedln
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
     </li>
-    <li class="nav-item">
-        <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-            <button id="logout" type="submit" class="nav-link btn btn-link border-0">Logout</button>
-        </form>
-    </li>
-}
-else
-{
-    <li class="nav-item">
-        <a class="nav-link" id="register" asp-area="Identity" asp-page="/Account/Register">Register</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" id="login" asp-area="Identity" asp-page="/Account/Login">Login</a>
-    </li>
-}
 </ul>
