@@ -31,14 +31,14 @@
                             <a class="nav-link" asp-area="Customer" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-area="Admin" asp-controller="Order" asp-action="Index">Manage Orders</a>
+                            <a class="nav-link" asp-area="Admin" asp-controller="Order" asp-action="Index">Orders</a>
                         </li>
                         
                         @if (User.IsInRole("Admin"))
                         {
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Content Management
+                                    Admin
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li class="nav-item">
@@ -55,7 +55,7 @@
                                         <a class="dropdown-item" asp-area="Identity" asp-page="/Account/Register">Create User</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="dropdown-item" asp-area="Admin" asp-controller="User" asp-action="Index">Manage User</a>
+                                        <a class="dropdown-item" asp-area="Admin" asp-controller="User" asp-action="Index">Users</a>
                                     </li>
                                 </ul>
                             </li>
@@ -96,10 +96,10 @@
         </main>
     </div>
 
-    @* <footer class="border-top footer bg-primary text-muted">
-        <div class="text-center">
-            &copy; 2024 - BulkyWeb - Made with <i class="bi bi-heart-fill"></i>
-        </div>
+    @* <footer class="footer bg-primary text-center mt-3">
+        <a href="https://pgmp1992.github.io/Portfolio/" target="_blank" style="text-white">
+            &copy; 2024 - Books 
+        </a>
     </footer>
  *@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
