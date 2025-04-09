@@ -5,5 +5,6 @@ namespace Bulky.DataAccess.Repository.IRepository
     public interface IProductRepository : IRepository<Product>
     {
         void Update(Product obj);
+        List<Product> GetByName(string name);
     }
 }

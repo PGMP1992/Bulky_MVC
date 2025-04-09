@@ -3,23 +3,14 @@
 <form method="post">
     <br />
     <div class="card">
-        <div class="card-header bg-secondary bg-gradient text-light ml-0 py-4">
-            <div class="row px-4">
-                <div class="col-6">
-                    <h5 class="pt-2 text-white">
-                        Shopping Cart
-                    </h5>
-                </div>
-
-            </div>
+        <div class="card-header bg-gradient ml-0 py-2">
+            <h5>Shopping Cart</h5>
         </div>
-        <div class="card-body my-4">
+        <div class="card-body">
             <div class="row">
-            </div>
-            <div class="row mb-3 pb-3">
                 <div class="col-md-2 offset-md-1">
                     <a asp-area="Customer" asp-controller="Home" asp-action="Index" 
-                            class="btn btn-outline-primary text-uppercase mb-5 btn-sm"><small>Continue Shopping</small></a>
+                            class="btn btn-outline-primary text-uppercase mb-3 btn-sm"><small>Continue Shopping</small></a>
                 </div>
 
                 <div class="col-md-10 offset-md-1">
@@ -36,7 +27,7 @@
                                     <img src="https://placehold.co/500x600/png" class="card-img-top rounded" />
                                 }
                             </div>
-                            @* <img src="@item.Product.ImageUrl" class="rounded" width="100%" /> *@
+                            
                             <div class="col-12 col-lg-6 pt-md-3">
                                 <h5 class="text-uppercase text-secondary"><strong>@item.Product.Title</strong></h5>
                                 <p><small>@Html.Raw(item.Product.Description)</small></p>
@@ -72,7 +63,7 @@
             <div class="card-footer bg-white border-0">
                 <div class="row">
                     <div class="col-md-4 offset-md-4">
-                        <ul class="list-group mb-4">
+                        <ul class="list-group">
                             <li class="d-flex justify-content-between align-items-center">
                                 <h5 class="text-dark fw-semibold text-uppercase"> Total </h5>
                                 <h4 class="text-dark fw-bolder">@Model.OrderHeader.OrderTotal.ToString("c")</h4>

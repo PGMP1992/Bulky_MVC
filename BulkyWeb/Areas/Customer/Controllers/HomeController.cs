@@ -22,11 +22,21 @@ namespace BulkyWeb.Areas.Customer.Controllers
             _unitOfWork = unitOfWork;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(string search)
         {
-            
-            IEnumerable<Product> productList = _unitOfWork.Product.GetAll(includeProperties : "Category,ProductImages");
-            return View(productList);
+            IEnumerable<Product> products = _unitOfWork.Product.GetAll(includeProperties : "Category,ProductImages");
+            ViewBag.Message = "";
+
+            if (!String.IsNullOrEmpty(search))
+            {
+                var products1 = _unitOfWork.Product.GetByName(search);
+                if (products1.Count > 0)
+                {
+                    return View(products1);
+                }
+                ViewBag.Message = "There are not books with that name!";
+            }
+            return View(products);
         }
 
         // Have to pass to Index view as asp-route-productId="@product.Id" otherwise it passes product as Null 

@@ -1,5 +1,6 @@
 ﻿using Bulky.DataAccess.Repository.IRepository;
 using Bulky.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Bulky.DataAccess.Repository
 {
@@ -16,7 +17,7 @@ namespace Bulky.DataAccess.Repository
         public void Update(Product obj)
         {
             var objFromDb = _db.Products.FirstOrDefault(x => x.Id == obj.Id);
-            if(objFromDb != null)
+            if (objFromDb != null)
             {
                 objFromDb.Title = obj.Title;
                 objFromDb.Description = obj.Description;
@@ -30,6 +31,15 @@ namespace Bulky.DataAccess.Repository
                 objFromDb.ProductImages = obj.ProductImages;
             }
             //_db.Products.Update(obj);
+        }
+
+        public List<Product> GetByName(string name)
+        {
+            return _db.Products
+                .Include(x => x.Category)
+                .Include(x => x.ProductImages)
+                .Where(x => x.Title.ToLower().Contains(name.ToLower()))
+                .ToList();
         }
     }
 }

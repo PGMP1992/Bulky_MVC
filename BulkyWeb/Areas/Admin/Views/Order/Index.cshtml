@@ -31,18 +31,12 @@
 }
 
 <div class="card mt-4">
-    <div class="card-header bg-secondary bg-gradient text-light ml-0 py-4">
-        <div class="row px-4">
-            <div class="col-6">
-                <h5 class="pt-2 text-white">
-                    Order List
-                </h5>
-            </div>
-        </div>
+    <div class="card-header bg-gradient ml-0 py-2">
+        <h5>Order List</h5>
     </div>
 
     <div class="card-body p-4">
-        <div class="d-flex justify-content-between pb-5 pt-2">
+        <div class="d-flex justify-content-between">
             <span></span>
             <ul class="list-group list-group-horizontal-sm">
                 <a style="text-decoration:none" asp-controller="Order" asp-action="Index" asp-route-status="inprocess">
