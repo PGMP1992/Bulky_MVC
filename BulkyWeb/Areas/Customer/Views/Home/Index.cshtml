@@ -2,8 +2,8 @@
 
 @if (ViewBag.Message != "")
 {
-    <div class="col-12 p-3 mb-2 bg-danger ">
-        <span class="text-white"><b>@ViewBag.Message</b></span>
+    <div class="col-12 p-3 mb-2">
+        <span class="text-danger"><b>@ViewBag.Message</b></span>
     </div>
 }
 
@@ -38,7 +38,7 @@
                     @* has to pass route below to Controller.Details *@
                     <a asp-action="Details" 
                         asp-route-productId="@product.Id" 
-                            class="btn btn-primary border-0">Details
+                            class="btn btn-dark border-0">Details
                     </a>
                 </div>
                 </div>

@@ -17,9 +17,8 @@
 
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow mb-3">
             <div class="container-fluid">
-                @* <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Books</a> *@
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -63,7 +62,6 @@
                         @* Replaced text below with the ViewComponent ---------------------------------
                         @if (HttpContextAccessor.HttpContext.Session.GetInt32(SD.SessionCart) != null)
                         {
-
                             <li class="nav-item">
                                 <a class="nav-link" asp-area="Customer" asp-controller="Cart" asp-action="Index">
                                     <i class="bi bi-cart"></i>&nbsp; Cart
@@ -73,20 +71,18 @@
                         } else
                         {
                         *@
-                            <li class="nav-item">
-                                <a class="nav-link" asp-area="Customer" asp-controller="Cart" asp-action="Index">
-                                @*  <i class="bi bi-cart"></i>&nbsp; Cart
-                                    (0) *@
-                                    @await Component.InvokeAsync("ShoppingCart")
-                                </a>
-                            </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="Customer" asp-controller="Cart" asp-action="Index">
+                                @await Component.InvokeAsync("ShoppingCart")
+                            </a>
+                        </li>
 
-                            <li class="nav-item px-2">
-                                <form class="d-flex">
-                                    <input class="form-control me-2" name="search" type="text" placeholder="Book name...">
-                                    <button class="btn btn-primary" type="submit" asp-area="Customer" asp-controller="Home" asp-action="Index" asp-route-search="search">Search</button>
-                                </form>
-                            </li>
+                        <li class="nav-item px-2">
+                            <form class="d-flex">
+                                <input class="form-control me-2" name="search" type="text" placeholder="Book name...">
+                                <button class="btn btn-primary" type="submit" asp-area="Customer" asp-controller="Home" asp-action="Index" asp-route-search="search">Search</button>
+                            </form>
+                        </li>
                     </ul>
                     <partial name="_LoginPartial" /> @* Added for Loging and Register items. *@
 
@@ -102,9 +98,50 @@
         </main>
     </div>
 
+    <div class="modal fade" id="infoModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Books App Functionality</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h6 class="text-info">Following are the User Accounts that exist by default (Password: Admin123*): </h6>
+                    <p>Admin User :      <b>admin@host.com</b> <br/>
+                    Individual User : <b>user1@email.com</b><br/>
+                    Company User :    <b>company@email.com</b></p>
+                    <h6 class="text-info">How to use the website:</h6>
+                    <p>This website is intended to serve as demo application.</p>
+                    <p>Users can place an order after adding items to cart.</p>
+                    <p>Once an Order is placed you can login as Admin User and manage orders to see the flow of the application.</p>
+                    <p>In order to place an order you can use any test credit card number supported by Stripe.</p>
+                    <p>A default example is 4242 4242 4242 4242, valid date, any 3 digit CVV.</p>
+                    <div class="row justify-content-between">
+                        <div class="col-6">
+                            <a href="mailto:pedro@dkltd.net">
+                                <i class="bi bi-envelope-fill"></i>
+                                Email
+                            </a>
+                        </div>
+                        <div class="col-6">
+                            <a href="https://www.linkedin.com/in/pedro-martinez-70077691" target="_blank">
+                                <i class="bi bi-linkedin"></i>
+                                Linkedln
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <footer>
+        &copy; 2024
         <a href="https://pgmp1992.github.io/Port/" target="_blank" style="text-white">
-            &copy; 2024 - Books 
+             pgmp.se 
         </a>
     </footer>
 
