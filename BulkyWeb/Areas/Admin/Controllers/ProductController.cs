@@ -5,6 +5,7 @@ using Bulky.Utility;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Security.Claims;
 
 namespace BulkyWeb.Areas.Admin.Controllers
 {
@@ -15,17 +16,78 @@ namespace BulkyWeb.Areas.Admin.Controllers
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IWebHostEnvironment _webHostEnvironment;
+        private readonly BookService _bookService;
 
-        public ProductController(IUnitOfWork unitOfWork, IWebHostEnvironment webHostEnvironment)
+        public ProductController(IUnitOfWork unitOfWork,
+            IWebHostEnvironment webHostEnvironment,
+            BookService bookService)
         {
             _unitOfWork = unitOfWork;
             _webHostEnvironment = webHostEnvironment;
+            _bookService = bookService;
         }
 
         public IActionResult Index()
         {
             List<Product> objProductList = _unitOfWork.Product.GetAll(includeProperties: "Category").ToList();
             return View(objProductList);
+        }
+
+        public IActionResult Import()
+        {
+            ViewBag.Message = "";
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Import(string isbn)
+        {
+            if (string.IsNullOrEmpty(isbn))
+            {
+                ModelState.AddModelError("", "ISBN is required.");
+                return View();
+            }
+
+            var bookDetails = await _bookService.GetBookDetailsByISBNAsync(isbn);
+
+            if (bookDetails == null || string.IsNullOrEmpty(bookDetails.Title))
+            {
+                ModelState.AddModelError("", "Book not found.");
+                return View();
+            }
+
+            //var userId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+            DateTime? publishDate = null;
+            if (DateTime.TryParse(bookDetails.PublishDate, out var parsedDate))
+            {
+                publishDate = parsedDate;
+            }
+
+            var prod = new Product
+            {
+                Title = bookDetails.Title,
+                Author = bookDetails.Author,
+                ISBN = isbn,
+                Description = "Praesent vitae sodales libero. Praesent molestie orci augue, vitae euismod velit sollicitudin ac. Praesent vestibulum facilisis nibh ut ultricies.\r\n\r\nNunc malesuada viverra ipsum sit amet tincidunt. ",
+                ListPrice = 110,
+                Price = 100,
+                Price50 = 95,
+                Price100 = 90,
+                CategoryId = 1,
+                //UserId = userId,
+                Genre = bookDetails.Genre,
+                Pages = bookDetails.Pages,
+                PublishDate = publishDate,
+                Complete = false, // Initialize Complete to false,
+                //Cover = bookDetails.Cover // Added PM
+            };
+
+            _unitOfWork.Product.Add(prod);
+            _unitOfWork.Save();
+            //await _context.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
         }
 
         // Using ProductVM
@@ -99,12 +161,12 @@ namespace BulkyWeb.Areas.Admin.Controllers
                             productVM.Product.ProductImages = new List<ProductImage>();
                         }
                         productVM.Product.ProductImages.Add(productImage);
-                        
+
                     }
 
                     _unitOfWork.Product.Update(productVM.Product);
                     _unitOfWork.Save();
-                    
+
                 }
                 TempData["success"] = "Product Created/ Updated";
                 return RedirectToAction("Index", "Product");
@@ -140,7 +202,7 @@ namespace BulkyWeb.Areas.Admin.Controllers
                 }
 
             }
-            return RedirectToAction(nameof(Upsert), new {id = productId});
+            return RedirectToAction(nameof(Upsert), new { id = productId });
         }
         /* Replaced Edit above in Upsert ------------------------------ 
          * and Delete with API Call below 

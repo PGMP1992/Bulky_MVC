@@ -26,16 +26,18 @@ namespace Bulky.DataAccess.DBInitializer
         {
 
             ////migrations if they are not applied
-            //try
-            //{
-            //    if (_db.Database.GetPendingMigrations().Count() > 0)
-            //    {
-            //        _db.Database.Migrate();
-            //    }
-            //}
-            //catch (Exception ex) 
-            //{ 
-            //}
+            try
+            {
+                if (_db.Database.GetPendingMigrations().Count() > 0)
+                {
+                    _db.Database.Migrate();
+                }
+            }
+            catch (Exception ex)
+            {
+            }
+
+            string email = "admin@email.com";
 
             //create roles if they are not created
             if (!_roleManager.RoleExistsAsync(SD.Role_Customer).GetAwaiter().GetResult())
@@ -47,20 +49,21 @@ namespace Bulky.DataAccess.DBInitializer
 
 
                 //if roles are not created, then we will create admin user as well
+                
                 _userManager.CreateAsync(new ApplicationUser
                 {
-                    UserName = "admin@host.com",
-                    Email = "admin@host.com",
+                    UserName = email,
+                    Email = email,
                     Name = "Admin",
                     PhoneNumber = "1112223333",
                     StreetAddress = "test 123 Ave",
                     State = "Skane",
                     PostalCode = "23422",
                     City = "Ystad"
-                }, "Password1_").GetAwaiter().GetResult();
+                }, "Admin123*").GetAwaiter().GetResult();
 
 
-                ApplicationUser user = _db.ApplicationUsers.FirstOrDefault(u => u.Email == "admin@host.com");
+                ApplicationUser user = _db.ApplicationUsers.FirstOrDefault(u => u.Email == email);
                 _userManager.AddToRoleAsync(user, SD.Role_Admin).GetAwaiter().GetResult();
             }
             return;

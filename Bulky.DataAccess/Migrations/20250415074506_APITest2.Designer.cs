@@ -12,15 +12,15 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Bulky.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    [Migration("20240702150614_testProperty")]
-    partial class testProperty
+    [Migration("20250415074506_APITest2")]
+    partial class APITest2
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.6")
+                .HasAnnotation("ProductVersion", "8.0.10")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -236,25 +236,33 @@ namespace Bulky.DataAccess.Migrations
 
                     b.Property<string>("Author")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
+
+                    b.Property<bool>("Complete")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Genre")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
                     b.Property<string>("ISBN")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ImageUrl")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<double>("ListPrice")
                         .HasColumnType("float");
+
+                    b.Property<int>("Pages")
+                        .HasColumnType("int");
 
                     b.Property<double>("Price")
                         .HasColumnType("float");
@@ -265,12 +273,13 @@ namespace Bulky.DataAccess.Migrations
                     b.Property<double>("Price50")
                         .HasColumnType("float");
 
-                    b.Property<int>("TestProperty")
-                        .HasColumnType("int");
+                    b.Property<DateTime?>("PublishDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id");
 
@@ -284,14 +293,16 @@ namespace Bulky.DataAccess.Migrations
                             Id = 1,
                             Author = "Billy Spark",
                             CategoryId = 1,
+                            Complete = false,
                             Description = "Praesent vitae sodales libero. Praesent molestie orci augue, vitae euismod velit sollicitudin ac. Praesent vestibulum facilisis nibh ut ultricies.\r\n\r\nNunc malesuada viverra ipsum sit amet tincidunt. ",
+                            Genre = "Action",
                             ISBN = "SWD9999001",
-                            ImageUrl = "",
                             ListPrice = 99.0,
+                            Pages = 200,
                             Price = 90.0,
                             Price100 = 80.0,
                             Price50 = 85.0,
-                            TestProperty = 0,
+                            PublishDate = new DateTime(2025, 4, 5, 9, 45, 6, 254, DateTimeKind.Local).AddTicks(1279),
                             Title = "Fortune of Time"
                         },
                         new
@@ -299,14 +310,16 @@ namespace Bulky.DataAccess.Migrations
                             Id = 2,
                             Author = "Nancy Hoover",
                             CategoryId = 2,
+                            Complete = false,
                             Description = "Praesent vitae sodales libero. Praesent molestie orci augue, vitae euismod velit sollicitudin ac. Praesent vestibulum facilisis nibh ut ultricies.\r\n\r\nNunc malesuada viverra ipsum sit amet tincidunt. ",
+                            Genre = "Action",
                             ISBN = "CAW777777701",
-                            ImageUrl = "",
                             ListPrice = 40.0,
+                            Pages = 200,
                             Price = 30.0,
                             Price100 = 20.0,
                             Price50 = 25.0,
-                            TestProperty = 0,
+                            PublishDate = new DateTime(2025, 4, 5, 9, 45, 6, 254, DateTimeKind.Local).AddTicks(1338),
                             Title = "Dark Skies"
                         },
                         new
@@ -314,14 +327,16 @@ namespace Bulky.DataAccess.Migrations
                             Id = 3,
                             Author = "Julian Button",
                             CategoryId = 3,
+                            Complete = true,
                             Description = "Praesent vitae sodales libero. Praesent molestie orci augue, vitae euismod velit sollicitudin ac. Praesent vestibulum facilisis nibh ut ultricies.\r\n\r\nNunc malesuada viverra ipsum sit amet tincidunt. ",
+                            Genre = "Action",
                             ISBN = "RITO5555501",
-                            ImageUrl = "",
                             ListPrice = 55.0,
+                            Pages = 200,
                             Price = 50.0,
                             Price100 = 35.0,
                             Price50 = 40.0,
-                            TestProperty = 0,
+                            PublishDate = new DateTime(2025, 4, 5, 9, 45, 6, 254, DateTimeKind.Local).AddTicks(1343),
                             Title = "Vanish in the Sunset"
                         },
                         new
@@ -329,14 +344,16 @@ namespace Bulky.DataAccess.Migrations
                             Id = 4,
                             Author = "Abby Muscles",
                             CategoryId = 4,
+                            Complete = true,
                             Description = "Praesent vitae sodales libero. Praesent molestie orci augue, vitae euismod velit sollicitudin ac. Praesent vestibulum facilisis nibh ut ultricies.\r\n\r\nNunc malesuada viverra ipsum sit amet tincidunt. ",
+                            Genre = "Action",
                             ISBN = "WS3333333301",
-                            ImageUrl = "",
                             ListPrice = 70.0,
+                            Pages = 200,
                             Price = 65.0,
                             Price100 = 55.0,
                             Price50 = 60.0,
-                            TestProperty = 0,
+                            PublishDate = new DateTime(2025, 4, 5, 9, 45, 6, 254, DateTimeKind.Local).AddTicks(1347),
                             Title = "Cotton Candy"
                         },
                         new
@@ -344,14 +361,16 @@ namespace Bulky.DataAccess.Migrations
                             Id = 5,
                             Author = "Ron Parker",
                             CategoryId = 5,
+                            Complete = true,
                             Description = "Praesent vitae sodales libero. Praesent molestie orci augue, vitae euismod velit sollicitudin ac. Praesent vestibulum facilisis nibh ut ultricies.\r\n\r\nNunc malesuada viverra ipsum sit amet tincidunt. ",
+                            Genre = "Action",
                             ISBN = "SOTJ1111111101",
-                            ImageUrl = "",
                             ListPrice = 30.0,
+                            Pages = 200,
                             Price = 27.0,
                             Price100 = 20.0,
                             Price50 = 25.0,
-                            TestProperty = 0,
+                            PublishDate = new DateTime(2025, 4, 5, 9, 45, 6, 254, DateTimeKind.Local).AddTicks(1351),
                             Title = "Rock in the Ocean"
                         },
                         new
@@ -359,16 +378,40 @@ namespace Bulky.DataAccess.Migrations
                             Id = 6,
                             Author = "Laura Phantom",
                             CategoryId = 6,
+                            Complete = true,
                             Description = "Praesent vitae sodales libero. Praesent molestie orci augue, vitae euismod velit sollicitudin ac. Praesent vestibulum facilisis nibh ut ultricies.\r\n\r\nNunc malesuada viverra ipsum sit amet tincidunt. ",
+                            Genre = "Action",
                             ISBN = "FOT000000001",
-                            ImageUrl = "",
                             ListPrice = 25.0,
+                            Pages = 200,
                             Price = 23.0,
                             Price100 = 20.0,
                             Price50 = 22.0,
-                            TestProperty = 0,
+                            PublishDate = new DateTime(2025, 4, 5, 9, 45, 6, 254, DateTimeKind.Local).AddTicks(1355),
                             Title = "Leaves and Wonders"
                         });
+                });
+
+            modelBuilder.Entity("Bulky.Models.ProductImage", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("ProductImages");
                 });
 
             modelBuilder.Entity("Bulky.Models.ShoppingCart", b =>
@@ -519,7 +562,7 @@ namespace Bulky.DataAccess.Migrations
 
                     b.ToTable("AspNetUsers", (string)null);
 
-                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityUser");
+                    b.HasDiscriminator().HasValue("IdentityUser");
 
                     b.UseTphMappingStrategy();
                 });
@@ -674,6 +717,17 @@ namespace Bulky.DataAccess.Migrations
                     b.Navigation("Category");
                 });
 
+            modelBuilder.Entity("Bulky.Models.ProductImage", b =>
+                {
+                    b.HasOne("Bulky.Models.Product", "Product")
+                        .WithMany("ProductImages")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+                });
+
             modelBuilder.Entity("Bulky.Models.ShoppingCart", b =>
                 {
                     b.HasOne("Bulky.Models.ApplicationUser", "ApplicationUser")
@@ -751,6 +805,11 @@ namespace Bulky.DataAccess.Migrations
                         .HasForeignKey("CompanyId");
 
                     b.Navigation("Company");
+                });
+
+            modelBuilder.Entity("Bulky.Models.Product", b =>
+                {
+                    b.Navigation("ProductImages");
                 });
 #pragma warning restore 612, 618
         }

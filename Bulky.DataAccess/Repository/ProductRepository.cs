@@ -29,6 +29,11 @@ namespace Bulky.DataAccess.Repository
                 objFromDb.Price100 = obj.Price100;
                 objFromDb.CategoryId = obj.CategoryId;
                 objFromDb.ProductImages = obj.ProductImages;
+                objFromDb.Genre = obj.Genre;
+                objFromDb.Pages = obj.Pages;
+                objFromDb.PublishDate = obj.PublishDate;
+                objFromDb.Complete = obj.Complete;
+                //Cover = bookData["cover"]?.FirstOrDefault()?.ToString() //Added PM
             }
             //_db.Products.Update(obj);
         }

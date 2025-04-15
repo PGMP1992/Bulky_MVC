@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System.Reflection;
 
 namespace Bulky.DataAccess
 {
@@ -23,12 +22,12 @@ namespace Bulky.DataAccess
 
 
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
-        
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // Added to enable Identity 
-            base.OnModelCreating(modelBuilder); 
+            base.OnModelCreating(modelBuilder);
 
             // Categories 
             modelBuilder.Entity<Category>().HasData(
@@ -42,8 +41,9 @@ namespace Bulky.DataAccess
 
             // Products 
             modelBuilder.Entity<Product>().HasData(
-                new Product {
-                Id = 1,
+                new Product
+                {
+                    Id = 1,
                     Title = "Fortune of Time",
                     Author = "Billy Spark",
                     Description = "Praesent vitae sodales libero. Praesent molestie orci augue, vitae euismod velit sollicitudin ac. Praesent vestibulum facilisis nibh ut ultricies.\r\n\r\nNunc malesuada viverra ipsum sit amet tincidunt. ",
@@ -52,7 +52,11 @@ namespace Bulky.DataAccess
                     Price = 90,
                     Price50 = 85,
                     Price100 = 80,
-                    CategoryId = 1
+                    CategoryId = 1,
+                    Pages = 200,
+                    PublishDate = DateTime.Now.AddDays(-10),
+                    Genre = "Action",
+                    Complete = false
                 },
 
                 new Product
@@ -66,7 +70,11 @@ namespace Bulky.DataAccess
                     Price = 30,
                     Price50 = 25,
                     Price100 = 20,
-                    CategoryId = 2
+                    CategoryId = 2,
+                    Pages = 200,
+                    PublishDate = DateTime.Now.AddDays(-10),
+                    Genre = "Action",
+                    Complete = false
                 },
 
                 new Product
@@ -80,7 +88,11 @@ namespace Bulky.DataAccess
                     Price = 50,
                     Price50 = 40,
                     Price100 = 35,
-                    CategoryId = 3
+                    CategoryId = 3,
+                    Pages = 200,
+                    PublishDate = DateTime.Now.AddDays(-10),
+                    Genre = "Action",
+                    Complete = true
                 },
 
                 new Product
@@ -94,7 +106,11 @@ namespace Bulky.DataAccess
                     Price = 65,
                     Price50 = 60,
                     Price100 = 55,
-                    CategoryId = 4
+                    CategoryId = 4,
+                    Pages = 200,
+                    PublishDate = DateTime.Now.AddDays(-10),
+                    Genre = "Action",
+                    Complete = true
                 },
 
                 new Product
@@ -108,7 +124,11 @@ namespace Bulky.DataAccess
                     Price = 27,
                     Price50 = 25,
                     Price100 = 20,
-                    CategoryId = 5
+                    CategoryId = 5,
+                    Pages = 200,
+                    PublishDate = DateTime.Now.AddDays(-10),
+                    Genre = "Action",
+                    Complete = true
                 },
 
                 new Product
@@ -122,7 +142,11 @@ namespace Bulky.DataAccess
                     Price = 23,
                     Price50 = 22,
                     Price100 = 20,
-                    CategoryId = 6
+                    CategoryId = 6,
+                    Pages = 200,
+                    PublishDate = DateTime.Now.AddDays(-10),
+                    Genre = "Action",
+                    Complete = true
                 }
             ); // Products
         } // OnModelCreating

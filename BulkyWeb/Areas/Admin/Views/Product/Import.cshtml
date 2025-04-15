@@ -1,0 +1,13 @@
+﻿@{
+    ViewData["Title"] = "Search By ISBN";
+}
+
+<h4>Import from Open Library By ISBN</h4>
+
+<form asp-action="Import" method="post">
+    <div class="form-group">
+        <label for="isbn">ISBN</label>
+        <input type="text" class="form-control" id="isbn" name="isbn" required />
+    </div>
+    <button type="submit" class="btn btn-primary mt-2">Search</button>
+</form>

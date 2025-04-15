@@ -16,21 +16,33 @@ namespace Bulky.Models
         public int Id { get; set; }
 
         [Required]
+        [MaxLength(100)]
         public string Title { get; set; }
         
         [Required]
         public string Description { get; set; }
         
         [Required]
+        [MaxLength(50)]
         public string ISBN { get; set; }
         
         [Required]
+        [MaxLength(100)]
         public string Author { get; set; }
 
         [Required]
         [Display(Name = "List Price")]
         [Range(1,1000)]
         public double ListPrice { get; set; }
+
+        [MaxLength(50)]
+        public string? Genre { get; set; }
+
+        public int Pages { get; set; }
+        
+        public DateTime? PublishDate { get; set; }
+
+        public bool Complete { get; set; } = false;
 
         [Required]
         [Display(Name = "Price 1-50")]
