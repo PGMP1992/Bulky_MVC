@@ -287,24 +287,29 @@ namespace BulkyWeb.Areas.Admin.Controllers
                 return Json(new { success = false, message = "Error while deleting" });
             }
 
-            // Delete ImageUrl first 
-            string productPath = @"images\products\product-" + id;
-            string finalPath = Path.Combine(_webHostEnvironment.WebRootPath, productPath);
-
-            if (!Directory.Exists(finalPath))
+            try
             {
-                string[] filePaths = Directory.GetFiles(finalPath);
-                foreach (string filePath in filePaths)
+                // Delete ImageUrl first 
+                string productPath = @"images\products\product-" + id;
+                string finalPath = Path.Combine(_webHostEnvironment.WebRootPath, productPath);
+
+                if (!Directory.Exists(finalPath))
                 {
-                    System.IO.File.Delete(filePath);
+                    string[] filePaths = Directory.GetFiles(finalPath);
+                    foreach (string filePath in filePaths)
+                    {
+                        System.IO.File.Delete(filePath);
+                    }
+                    Directory.Delete(finalPath);
                 }
-                Directory.Delete(finalPath);
             }
-
-            _unitOfWork.Product.Remove(productToBeDeleted);
-            _unitOfWork.Save();
-
+            finally
+            {
+                _unitOfWork.Product.Remove(productToBeDeleted);
+                _unitOfWork.Save();
+            }
             return Json(new { success = true, message = "Delete Successful" });
+
         }
 
         #endregion

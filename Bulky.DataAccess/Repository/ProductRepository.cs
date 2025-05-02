@@ -46,5 +46,14 @@ namespace Bulky.DataAccess.Repository
                 .Where(x => x.Title.ToLower().Contains(name.ToLower()))
                 .ToList();
         }
+
+        public List<Product> GetSortedByName()
+        {
+            return _db.Products
+                .OrderBy(x => x.Title)
+                .Include(x => x.Category)
+                .Include(x => x.ProductImages)
+                .ToList();
+        }
     }
 }

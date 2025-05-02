@@ -24,7 +24,8 @@ namespace BulkyWeb.Areas.Customer.Controllers
 
         public IActionResult Index(string search)
         {
-            IEnumerable<Product> products = _unitOfWork.Product.GetAll(includeProperties : "Category,ProductImages");
+            //IEnumerable<Product> products = _unitOfWork.Product.GetAll(includeProperties: "Category,ProductImages");
+            IEnumerable<Product> products = _unitOfWork.Product.GetSortedByName();
             ViewBag.Message = "";
 
             if (!String.IsNullOrEmpty(search))

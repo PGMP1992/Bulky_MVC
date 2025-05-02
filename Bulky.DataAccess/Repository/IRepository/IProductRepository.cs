@@ -6,5 +6,7 @@ namespace Bulky.DataAccess.Repository.IRepository
     {
         void Update(Product obj);
         List<Product> GetByName(string name);
+        List<Product> GetSortedByName();
+
     }
 }

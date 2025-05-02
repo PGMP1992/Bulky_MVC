@@ -14,7 +14,7 @@ namespace Bulky.DataAccess.Repository
             _db = db;
             this.dbSet = _db.Set<T>();   // Ex.:  _db.Categories == dbSet;
             // Include Category in DbSet
-            _db.Products.Include(c => c.Category).Include(c => c.CategoryId);
+            //_db.Products.Include(c => c.Category).Include(c => c.CategoryId);
         }
 
         public void Add(T entity)
