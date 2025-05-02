@@ -35,7 +35,6 @@ namespace BulkyWeb.Areas.Admin.Controllers
 
         public IActionResult Import()
         {
-            ViewBag.Message = "";
             return View();
         }
 
@@ -44,7 +43,7 @@ namespace BulkyWeb.Areas.Admin.Controllers
         {
             if (string.IsNullOrEmpty(isbn))
             {
-                ModelState.AddModelError("", "ISBN is required.");
+                TempData["error"] = "ISBN required.";
                 return View();
             }
 
@@ -52,7 +51,8 @@ namespace BulkyWeb.Areas.Admin.Controllers
 
             if (bookDetails == null || string.IsNullOrEmpty(bookDetails.Title))
             {
-                ModelState.AddModelError("", "Book not found.");
+                TempData["error"] = "Book not found.";
+                //ModelState.AddModelError("", "Book not found.");
                 return View();
             }
 
@@ -85,6 +85,8 @@ namespace BulkyWeb.Areas.Admin.Controllers
 
             _unitOfWork.Product.Add(prod);
             _unitOfWork.Save();
+            
+            TempData["success"] = "Book created.";
             //await _context.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index));
